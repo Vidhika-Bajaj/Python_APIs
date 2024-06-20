@@ -28,6 +28,7 @@ fastapi_mongo_project/
 ├── models.py
 ├── schemas.py
 └── utils.py
+
 2.2 Configure PyMongo
 In main.py, set up the FastAPI application and configure the connection to MongoDB.
 
@@ -56,7 +57,9 @@ def startup_db_client():
 def shutdown_db_client():
     client.close()
     print("Disconnected from the MongoDB database.")
+
 Step 3: Create Models and Schemas
+
 3.1 Models
 In models.py, define the user model.
 
@@ -70,6 +73,7 @@ class User(BaseModel):
     email: EmailStr
     hashed_password: str
     linked_id: Optional[str] = None
+
 3.2 Schemas
 In schemas.py, define the Pydantic schemas for request validation.
 
@@ -89,6 +93,7 @@ class UserLogin(BaseModel):
 class UserLinkID(BaseModel):
     email: EmailStr
     linked_id: str
+
 Step 4: Utility Functions
 In utils.py, add functions to hash and verify passwords.
 
@@ -101,7 +106,9 @@ def hash_password(password: str) -> str:
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+
 Step 5: Implement API Endpoints
+
 5.1 Registration API
 In main.py, implement the registration endpoint.
 
@@ -117,6 +124,7 @@ async def register_user(user: UserCreate):
 
     users_collection.insert_one(user_data)
     return {"message": "User registered successfully"}
+
 5.2 Login API
 Implement the login endpoint.
 
@@ -130,6 +138,7 @@ async def login_user(user: UserLogin):
         raise HTTPException(status_code=400, detail="Invalid email or password")
 
     return {"message": "Login successful"}
+
 5.3 Linking ID API
 Implement the linking ID endpoint.
 
@@ -148,6 +157,7 @@ async def link_id(user: UserLinkID):
     )
 
     return {"message": "ID linked successfully"}
+
 5.4 Implement Joins
 You can use MongoDB's $lookup for joining data from multiple collections. For this example, let's assume there's another collection named items and we want to join user data with their items.
 
@@ -166,6 +176,7 @@ async def get_users_with_items():
         }
     ])
     return list(users_with_items)
+
 5.5 Chain Delete
 Implement the chain delete functionality to remove a user and associated data.
 
@@ -182,6 +193,7 @@ async def delete_user(email: str):
     db.items.delete_many({"user_id": user.get("linked_id")})
 
     return {"message": "User and associated data deleted successfully"}
+
 Step 6: Running the Application
 Run the FastAPI application using Uvicorn.
 
