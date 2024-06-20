@@ -14,7 +14,9 @@ source env/bin/activate  # On Windows, use env\Scripts\activate
 
 # Install required libraries
 pip install fastapi uvicorn pymongo bcrypt
+
 Step 2: Setting Up FastAPI and PyMongo
+
 2.1 Create a FastAPI Application
 Create a directory structure for your project:
 
