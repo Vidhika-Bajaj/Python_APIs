@@ -2,7 +2,7 @@
 
 To achieve the outlined objectives using FastAPI and MongoDB with PyMongo, you can follow these steps. The instructions cover setting up the environment, creating the required endpoints, and implementing the specified functionalities.
 
-Step 1: Environment Setup
+### Step 1: Environment Setup
 1.1 Install Required Libraries
 First, ensure you have Python installed. Then, create a virtual environment and install the necessary libraries.
 
@@ -15,7 +15,7 @@ source env/bin/activate  # On Windows, use env\Scripts\activate
 # Install required libraries
 pip install fastapi uvicorn pymongo bcrypt
 
-Step 2: Setting Up FastAPI and PyMongo
+### Step 2: Setting Up FastAPI and PyMongo
 
 2.1 Create a FastAPI Application
 Create a directory structure for your project:
@@ -58,7 +58,7 @@ def shutdown_db_client():
     client.close()
     print("Disconnected from the MongoDB database.")
 
-Step 3: Create Models and Schemas
+### Step 3: Create Models and Schemas
 
 3.1 Models
 In models.py, define the user model.
@@ -94,7 +94,7 @@ class UserLinkID(BaseModel):
     email: EmailStr
     linked_id: str
 
-Step 4: Utility Functions
+### Step 4: Utility Functions
 In utils.py, add functions to hash and verify passwords.
 
 python
@@ -107,7 +107,7 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
-Step 5: Implement API Endpoints
+### Step 5: Implement API Endpoints
 
 5.1 Registration API
 In main.py, implement the registration endpoint.
@@ -194,7 +194,7 @@ async def delete_user(email: str):
 
     return {"message": "User and associated data deleted successfully"}
 
-Step 6: Running the Application
+### Step 6: Running the Application
 Run the FastAPI application using Uvicorn.
 
 bash
